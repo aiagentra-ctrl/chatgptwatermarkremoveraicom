@@ -1,5 +1,12 @@
-// SEO helpers — keep URLs relative (no domain set yet)
+// SEO helpers
 export const SITE_NAME = "ChatGPT Watermark Remover";
+export const SITE_URL = "https://chatgptwatermarkremoverai.com";
+
+const abs = (path: string) => {
+  if (!path) return SITE_URL + "/";
+  if (path.startsWith("http")) return path;
+  return SITE_URL + (path.startsWith("/") ? path : `/${path}`);
+};
 
 export function buildMeta(opts: {
   title: string;
@@ -11,9 +18,10 @@ export function buildMeta(opts: {
   return [
     { title },
     { name: "description", content: description },
+    { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
     { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:url", content: path },
+    { property: "og:description", content: title ? description : description },
+    { property: "og:url", content: abs(path) },
     { property: "og:type", content: type },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
@@ -22,7 +30,7 @@ export function buildMeta(opts: {
 }
 
 export function canonical(path: string) {
-  return [{ rel: "canonical", href: path }];
+  return [{ rel: "canonical", href: abs(path) }];
 }
 
 export function breadcrumbLd(items: { name: string; path: string }[]) {
@@ -35,7 +43,7 @@ export function breadcrumbLd(items: { name: string; path: string }[]) {
         "@type": "ListItem",
         position: i + 1,
         name: it.name,
-        item: it.path,
+        item: abs(it.path),
       })),
     }),
   };
@@ -71,31 +79,9 @@ export function articleLd(opts: {
       description: opts.description,
       datePublished: opts.datePublished,
       dateModified: opts.datePublished,
-      mainEntityOfPage: opts.path,
+      mainEntityOfPage: abs(opts.path),
       author: { "@type": "Organization", name: SITE_NAME },
       publisher: { "@type": "Organization", name: SITE_NAME },
-    }),
-  };
-}
-
-export function howToLd(opts: {
-  name: string;
-  description: string;
-  steps: { name: string; text: string }[];
-}) {
-  return {
-    type: "application/ld+json",
-    children: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: opts.name,
-      description: opts.description,
-      step: opts.steps.map((s, i) => ({
-        "@type": "HowToStep",
-        position: i + 1,
-        name: s.name,
-        text: s.text,
-      })),
     }),
   };
 }
