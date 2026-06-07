@@ -94,8 +94,11 @@ export function Footer() {
             { to: "/midjourney-watermark-remover", l: "Midjourney Watermark Remover" },
             { to: "/grok-image-watermark-remover", l: "Grok Watermark Remover" },
             { to: "/stable-diffusion-watermark-remover", l: "Stable Diffusion Remover" },
+            { to: "/adobe-firefly-watermark-remover", l: "Adobe Firefly Remover" },
+            { to: "/tools", l: "All Tools →" },
           ]}
         />
+
 
         <div>
           <FooterCol
