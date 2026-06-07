@@ -4,8 +4,7 @@ import { COMPETITORS } from "@/content/comparisons";
 import { RELATED_TOOLS } from "@/content/related-tools";
 import { BLOG_POSTS } from "@/content/blog";
 
-// TODO: replace with your project URL once a project name or custom domain is set.
-const BASE_URL = "";
+const BASE_URL = "https://chatgptwatermarkremoverai.com";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
@@ -21,6 +20,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           "/chatgpt-image-watermark-explained",
           "/c2pa-vs-visible-watermark",
           "/best-chatgpt-image-watermark-removers",
+          "/tools",
           ...COMPETITORS.map((c) => `/chatgpt-watermark-remover-vs-${c.slug}`),
           ...RELATED_TOOLS.map((t) => `/${t.slug}`),
           "/blog",

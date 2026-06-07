@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WhatIsC2paMetadataIndexRouteImport } from './routes/what-is-c2pa-metadata/index'
 import { Route as VerifyIndexRouteImport } from './routes/verify/index'
+import { Route as ToolsIndexRouteImport } from './routes/tools/index'
 import { Route as TermsIndexRouteImport } from './routes/terms/index'
 import { Route as PrivacyIndexRouteImport } from './routes/privacy/index'
 import { Route as HowToRemoveChatgptImageWatermarkIndexRouteImport } from './routes/how-to-remove-chatgpt-image-watermark/index'
@@ -48,6 +49,11 @@ const WhatIsC2paMetadataIndexRoute = WhatIsC2paMetadataIndexRouteImport.update({
 const VerifyIndexRoute = VerifyIndexRouteImport.update({
   id: '/verify/',
   path: '/verify/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsIndexRoute = ToolsIndexRouteImport.update({
+  id: '/tools/',
+  path: '/tools/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsIndexRoute = TermsIndexRouteImport.update({
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/how-to-remove-chatgpt-image-watermark/': typeof HowToRemoveChatgptImageWatermarkIndexRoute
   '/privacy/': typeof PrivacyIndexRoute
   '/terms/': typeof TermsIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/verify/': typeof VerifyIndexRoute
   '/what-is-c2pa-metadata/': typeof WhatIsC2paMetadataIndexRoute
   '/blog/$slug/': typeof BlogSlugIndexRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/how-to-remove-chatgpt-image-watermark': typeof HowToRemoveChatgptImageWatermarkIndexRoute
   '/privacy': typeof PrivacyIndexRoute
   '/terms': typeof TermsIndexRoute
+  '/tools': typeof ToolsIndexRoute
   '/verify': typeof VerifyIndexRoute
   '/what-is-c2pa-metadata': typeof WhatIsC2paMetadataIndexRoute
   '/blog/$slug': typeof BlogSlugIndexRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/how-to-remove-chatgpt-image-watermark/': typeof HowToRemoveChatgptImageWatermarkIndexRoute
   '/privacy/': typeof PrivacyIndexRoute
   '/terms/': typeof TermsIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/verify/': typeof VerifyIndexRoute
   '/what-is-c2pa-metadata/': typeof WhatIsC2paMetadataIndexRoute
   '/blog/$slug/': typeof BlogSlugIndexRoute
@@ -224,6 +233,7 @@ export interface FileRouteTypes {
     | '/how-to-remove-chatgpt-image-watermark/'
     | '/privacy/'
     | '/terms/'
+    | '/tools/'
     | '/verify/'
     | '/what-is-c2pa-metadata/'
     | '/blog/$slug/'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/how-to-remove-chatgpt-image-watermark'
     | '/privacy'
     | '/terms'
+    | '/tools'
     | '/verify'
     | '/what-is-c2pa-metadata'
     | '/blog/$slug'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/how-to-remove-chatgpt-image-watermark/'
     | '/privacy/'
     | '/terms/'
+    | '/tools/'
     | '/verify/'
     | '/what-is-c2pa-metadata/'
     | '/blog/$slug/'
@@ -291,6 +303,7 @@ export interface RootRouteChildren {
   HowToRemoveChatgptImageWatermarkIndexRoute: typeof HowToRemoveChatgptImageWatermarkIndexRoute
   PrivacyIndexRoute: typeof PrivacyIndexRoute
   TermsIndexRoute: typeof TermsIndexRoute
+  ToolsIndexRoute: typeof ToolsIndexRoute
   VerifyIndexRoute: typeof VerifyIndexRoute
   WhatIsC2paMetadataIndexRoute: typeof WhatIsC2paMetadataIndexRoute
   BlogSlugIndexRoute: typeof BlogSlugIndexRoute
@@ -324,6 +337,13 @@ declare module '@tanstack/react-router' {
       path: '/verify'
       fullPath: '/verify/'
       preLoaderRoute: typeof VerifyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/': {
+      id: '/tools/'
+      path: '/tools'
+      fullPath: '/tools/'
+      preLoaderRoute: typeof ToolsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms/': {
@@ -463,6 +483,7 @@ const rootRouteChildren: RootRouteChildren = {
     HowToRemoveChatgptImageWatermarkIndexRoute,
   PrivacyIndexRoute: PrivacyIndexRoute,
   TermsIndexRoute: TermsIndexRoute,
+  ToolsIndexRoute: ToolsIndexRoute,
   VerifyIndexRoute: VerifyIndexRoute,
   WhatIsC2paMetadataIndexRoute: WhatIsC2paMetadataIndexRoute,
   BlogSlugIndexRoute: BlogSlugIndexRoute,
@@ -470,13 +491,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
