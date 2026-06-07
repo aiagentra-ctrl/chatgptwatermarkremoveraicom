@@ -85,3 +85,28 @@ export function articleLd(opts: {
     }),
   };
 }
+
+export function howToLd(opts: {
+  name: string;
+  description?: string;
+  steps: { name: string; text: string }[];
+  totalTime?: string;
+}) {
+  return {
+    type: "application/ld+json",
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: opts.name,
+      description: opts.description,
+      totalTime: opts.totalTime ?? "PT1M",
+      estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "0" },
+      step: opts.steps.map((s, i) => ({
+        "@type": "HowToStep",
+        position: i + 1,
+        name: s.name,
+        text: s.text,
+      })),
+    }),
+  };
+}
