@@ -75,4 +75,15 @@ export const RELATED_TOOLS: RelatedTool[] = [
       "Stable Diffusion outputs through Automatic1111, ComfyUI and similar UIs embed your prompt, negative prompt, seed, sampler and model hash as PNG tEXt chunks — anyone with a metadata viewer can read your entire workflow. The official Stability release also applies their invisible-watermark library by default. Our canvas re-encoder removes all PNG text metadata. The invisible-watermark layer is pixel-level and partially survives re-encoding.",
     hasC2PA: false,
   },
+  {
+    slug: "adobe-firefly-watermark-remover",
+    ai: "Adobe Firefly",
+    brand: "Adobe Firefly",
+    watermarkType: "C2PA Content Credentials (Adobe-signed)",
+    description:
+      "Adobe Firefly embeds C2PA Content Credentials signed by Adobe identifying the model and edit history. Our tool detects and strips the C2PA/JUMBF block completely.",
+    longDescription:
+      "Firefly was one of the first commercial generators to ship C2PA by default. Every export carries an Adobe-signed JUMBF box with model name, generation timestamp, and (for edits) a full action history. Because the container format is the same as ChatGPT's, our Canvas-based re-encoder removes it identically. Pixel-level Adobe watermarks are not applied to Firefly outputs by default.",
+    hasC2PA: true,
+  },
 ];
