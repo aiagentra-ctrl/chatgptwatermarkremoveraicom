@@ -10,6 +10,7 @@ export default defineConfig({
   // Force-enable the Nitro deploy plugin and pin output to `.output/`
   // (required by Hostinger / Node hosts that expect `.output/server/index.mjs`).
   nitro: {
+    preset: "node-server",
     output: {
       dir: ".output",
       serverDir: ".output/server",
