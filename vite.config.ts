@@ -7,9 +7,15 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
-  // Force-enable the Nitro deploy plugin so production builds output to `.output/`
+  // Force-enable the Nitro deploy plugin and pin output to `.output/`
   // (required by Hostinger / Node hosts that expect `.output/server/index.mjs`).
-  nitro: true,
+  nitro: {
+    output: {
+      dir: ".output",
+      serverDir: ".output/server",
+      publicDir: ".output/public",
+    },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
